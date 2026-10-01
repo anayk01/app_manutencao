@@ -25,3 +25,24 @@ arquivo, fieldnames=CAMPOS
 )
 escritor.writeheader()
 escritor.writerows(solicitacoes)
+
+def gerar_novo_id(solicitacoes):
+ids = []
+for solicitacao in solicitacoes:
+try:
+ids.append(
+int(solicitacao["id"])
+)
+except (ValueError, KeyError):
+pass
+return str( max(ids, default=0) + 1 )
+
+@app.route("/")
+def inicio():
+solicitacoes = carregar_solicitacoes()
+return render_template(
+"index.html",
+solicitacoes=solicitacoes
+
+  if __name__ == "__main__":
+app.run(debug=True)
